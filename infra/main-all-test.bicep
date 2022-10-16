@@ -4,7 +4,7 @@ param location string
 param prefix string
 param eventGridTopicSourceSubscriptions array
 
-module prerequisites 'main-preq.bicep' = {
+module prerequisites 'main-preq-test.bicep' = {
   name: 'prerequisites'
   params: {
     location: location
