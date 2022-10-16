@@ -1,6 +1,10 @@
-az deployment sub create -l canadacentral -f .\main-preq-test.bicep -p .\params-preq.json
+az deployment sub create -l canadacentral -f .\main-all.bicep -p .\params-all.json
 
 az group delete --name prvw-atmtn-dev-network --yes
+
+=============================================================================================
+
+az deployment sub create -l canadacentral -f .\main-preq-test.bicep -p .\params-preq.json
 
 # Check the chapter-1 scripts for Login into Azure
 
