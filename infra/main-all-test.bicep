@@ -2,6 +2,7 @@ targetScope = 'subscription'
 
 param location string
 param prefix string
+param eventGridTopicSourceSubscriptions array
 
 module prerequisites 'main-preq.bicep' = {
   name: 'prerequisites'
@@ -15,7 +16,7 @@ module main 'main-test.bicep' = {
   name: 'main'
   params: {
     createEventSubscription: true
-    eventGridTopicSourceSubscriptions: ['7f155fd6-3949-4a06-a388-93905a63ce93']
+    eventGridTopicSourceSubscriptions: eventGridTopicSourceSubscriptions
     functionSubnetId: prerequisites.outputs.functionSubnetId
     location: location
     prefix: prefix

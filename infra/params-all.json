@@ -7,6 +7,14 @@
         },
         "prefix": {
             "value": "prvw-atmtn"
+        },
+        "eventGridTopicSourceSubscriptions": {
+            "value": [
+               {
+                   "subscriptionId": "7f155fd6-3949-4a06-a388-93905a63ce93",
+                   "location": "canadacentral"
+               }
+            ]
         }
     }
 }
