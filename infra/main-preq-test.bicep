@@ -59,12 +59,57 @@ module networkServices 'modules/network.bicep' = {
   }
 }
 
+// Private DNS zones
+resource globalDnsResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
+  name: '${name}-global-dns'
+  location: location
+  tags: tagsJoined
+  properties: {}
+}
+
+module globalDnsZones 'modules/services/privatednszones.bicep' = {
+  name: 'globalDnsZones'
+  scope: globalDnsResourceGroup
+  params: {
+    tags: tagsJoined
+    vnetId: networkServices.outputs.vnetId
+  }
+}
+
+// Governance resources
+// resource governanceResourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
+//   name: '${name}-governance'
+//   location: location
+//   tags: tagsJoined
+//   properties: {}
+// }
+
+// module governanceResources 'modules/governance.bicep' = {
+//   name: 'governanceResources'
+//   scope: governanceResourceGroup
+//   params: {
+//     location: location
+//     prefix: name
+//     tags: tagsJoined
+//     subnetId: networkServices.outputs.servicesSubnetId
+//     privateDnsZoneIdPurview: globalDnsZones.outputs.privateDnsZoneIdPurview
+//     privateDnsZoneIdPurviewPortal: globalDnsZones.outputs.privateDnsZoneIdPurviewPortal
+//     privateDnsZoneIdStorageBlob: globalDnsZones.outputs.privateDnsZoneIdBlob
+//     privateDnsZoneIdStorageQueue: globalDnsZones.outputs.privateDnsZoneIdQueue
+//     privateDnsZoneIdEventhubNamespace: globalDnsZones.outputs.privateDnsZoneIdNamespace
+//   }
+// }
+
 // Outputs
 output location string = location
 output environment string = environment
 output prefix string = prefix
 output tags object = tags
-output purviewRootCollectionMetadataPolicyId string = 'Please check the docs to understand how to obtain that GUID'
+// output purviewId string = governanceResources.outputs.purviewId
+// output purviewManagedStorageId string = governanceResources.outputs.purviewManagedStorageId
+// output purviewManagedEventHubId string = governanceResources.outputs.purviewManagedEventHubId
+// output purviewRootCollectionName string = last(split(governanceResources.outputs.purviewId, '/'))
+// output purviewRootCollectionMetadataPolicyId string = 'Please check the docs to understand how to obtain that GUID'
 output eventGridTopicSourceSubscriptions array = [
   {
     subscriptionId: subscription().subscriptionId
@@ -74,4 +119,6 @@ output eventGridTopicSourceSubscriptions array = [
 output createEventSubscription bool = false
 output subnetId string = networkServices.outputs.servicesSubnetId
 output functionSubnetId string = networkServices.outputs.functionSubnetId
-
+output privateDnsZoneIdBlob string = globalDnsZones.outputs.privateDnsZoneIdBlob
+output privateDnsZoneIdFile string = globalDnsZones.outputs.privateDnsZoneIdFile
+output privateDnsZoneIdKeyVault string = globalDnsZones.outputs.privateDnsZoneIdKeyVault

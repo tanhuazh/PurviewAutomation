@@ -1,3 +1,9 @@
+# no purview
+az deployment sub what-if -l canadacentral -f .\main-all-test.bicep -p .\params-all.json
+
+az deployment sub create -l canadacentral -f .\main-all-test.bicep -p .\params-all.json
+
+============================================================================================
 az deployment sub what-if -l canadacentral -f .\main-all.bicep -p .\params-all.json
 
 az deployment sub create -l canadacentral -f .\main-all.bicep -p .\params-all.json
