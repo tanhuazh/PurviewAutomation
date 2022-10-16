@@ -40,12 +40,12 @@ resource functionAppSettings 'Microsoft.Web/sites/config@2022-03-01' = {
     WEBSITE_CONTENTAZUREFILECONNECTIONSTRING: 'DefaultEndpointsProtocol=https;AccountName=${storageName};AccountKey=${listKeys(storageId, '2021-06-01').keys[0].value};EndpointSuffix=core.windows.net'
     WEBSITE_CONTENTSHARE: functionFileShareName
     WEBSITE_RUN_FROM_PACKAGE: empty(repositoryUrl) ? '1' : '0'
-    APPINSIGHTS_INSTRUMENTATIONKEY: '@Microsoft.KeyVault(SecretUri=${applicationInsightsInstrumentationKeySecretUri})'
-    APPLICATIONINSIGHTS_CONNECTION_STRING: '@Microsoft.KeyVault(SecretUri=${applicationInsightsConnectionStringSecretUri})'
+    // APPINSIGHTS_INSTRUMENTATIONKEY: '@Microsoft.KeyVault(SecretUri=${applicationInsightsInstrumentationKeySecretUri})'
+    // APPLICATIONINSIGHTS_CONNECTION_STRING: '@Microsoft.KeyVault(SecretUri=${applicationInsightsConnectionStringSecretUri})'
     APPINSIGHTS_PROFILERFEATURE_VERSION: '1.0.0'
     ApplicationInsightsAgent_EXTENSION_VERSION: '~2'
     DiagnosticServices_EXTENSION_VERSION: '~3'
-    AzureWebJobsStorage: '@Microsoft.KeyVault(SecretUri=${storageConnectionStringSecretUri})'
+    AzureWebJobsStorage: 'DefaultEndpointsProtocol=https;AccountName=${storageName};AccountKey=${listKeys(storageId, '2021-06-01').keys[0].value};EndpointSuffix=core.windows.net'
     WEBSITE_CONTENTOVERVNET: '1'
     WEBSITE_VNET_ROUTE_ALL: '1'
     PROJECT: empty(repositoryUrl) ? '' : 'code/PurviewAutomation/PurviewAutomation.csproj'
@@ -73,7 +73,7 @@ resource functionSourceControl 'Microsoft.Web/sites/sourcecontrols@2022-03-01' =
   ]
   properties: {
     repoUrl: repositoryUrl
-    branch: 'main'
+    branch: 'michael-test'
     isManualIntegration: true
   }
 }

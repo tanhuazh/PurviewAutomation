@@ -3,6 +3,7 @@ targetScope = 'subscription'
 param location string
 param prefix string
 param eventGridTopicSourceSubscriptions array
+param repositoryUrl string
 
 module prerequisites 'main-preq-test.bicep' = {
   name: 'prerequisites'
@@ -24,7 +25,7 @@ module main 'main-test.bicep' = {
     // purviewManagedEventHubId: prerequisites.outputs.purviewManagedEventHubId
     // purviewManagedStorageId: prerequisites.outputs.purviewManagedStorageId
     // purviewRootCollectionMetadataPolicyId: 'test'
-    repositoryUrl: ''
+    repositoryUrl: repositoryUrl
     subnetId: prerequisites.outputs.subnetId
   }
 }

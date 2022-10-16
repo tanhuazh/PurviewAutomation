@@ -15,6 +15,9 @@
                    "location": "canadacentral"
                }
             ]
+        },
+        "repositoryUrl": {
+            "value": "https://github.com/tanhuazh/PurviewAutomation"
         }
     }
 }
