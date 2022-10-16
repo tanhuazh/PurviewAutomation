@@ -16,6 +16,8 @@ param storageConnectionStringSecretUri string
 // param purviewRootCollectionName string
 // param purviewRootCollectionMetadataPolicyId string
 param repositoryUrl string = ''
+param storageName string
+param storageId string
 
 // Variables
 var functionName = length(split(functionId, '/')) == 9 ? last(split(functionId, '/')) : 'incorrectSegmentLength'
@@ -26,13 +28,16 @@ resource function 'Microsoft.Web/sites@2022-03-01' existing = {
   name: functionName
 }
 
+// https://github.com/Azure/azure-functions-host/issues/7094
+// WEBSITE_CONTENTAZUREFILECONNECTIONSTRING
+// WEBSITE_CONTENTAZUREFILECONNECTIONSTRING as a key vault reference is not supported for creation
 resource functionAppSettings 'Microsoft.Web/sites/config@2022-03-01' = {
   parent: function
   name: 'appsettings'
   properties: {
     FUNCTIONS_EXTENSION_VERSION: '~4'
     FUNCTIONS_WORKER_RUNTIME: 'dotnet'
-    WEBSITE_CONTENTAZUREFILECONNECTIONSTRING: '@Microsoft.KeyVault(SecretUri=${storageConnectionStringSecretUri})'
+    WEBSITE_CONTENTAZUREFILECONNECTIONSTRING: 'DefaultEndpointsProtocol=https;AccountName=${storageName};AccountKey=${listKeys(storageId, '2021-06-01').keys[0].value};EndpointSuffix=core.windows.net'
     WEBSITE_CONTENTSHARE: functionFileShareName
     WEBSITE_RUN_FROM_PACKAGE: empty(repositoryUrl) ? '1' : '0'
     APPINSIGHTS_INSTRUMENTATIONKEY: '@Microsoft.KeyVault(SecretUri=${applicationInsightsInstrumentationKeySecretUri})'

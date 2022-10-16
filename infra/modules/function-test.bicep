@@ -110,6 +110,8 @@ module function001AppSettings 'services/functionAppSettings-test.bicep' = {
     applicationInsightsInstrumentationKeySecretUri: keyvault001Secrets.outputs.applicationInsightsInstrumentationKeySecretUri
     applicationInsightsConnectionStringSecretUri: keyvault001Secrets.outputs.applicationInsightsConnectionStringSecretUri
     repositoryUrl: repositoryUrl
+    storageName: storage001Name
+    storageId: storage001.outputs.storageId
   }
 }
 

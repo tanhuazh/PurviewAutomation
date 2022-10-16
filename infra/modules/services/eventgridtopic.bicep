@@ -17,6 +17,8 @@ param createEventSubscription bool
 // Variables
 
 // Resources
+// Only one system topic is allowed per source.
+// delete existing if needed
 resource eventGridTopic 'Microsoft.EventGrid/systemTopics@2022-06-15' = {
   name: eventGridTopicName
   location: 'global'

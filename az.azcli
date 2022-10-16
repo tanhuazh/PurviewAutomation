@@ -1,7 +1,7 @@
 # no purview
-az deployment sub what-if -l canadacentral -f .\main-all-test.bicep -p .\params-all.json
+az deployment sub what-if -l canadacentral -f .\infra\main-all-test.bicep -p .\infra\params-all.json
 
-az deployment sub create -l canadacentral -f .\main-all-test.bicep -p .\params-all.json
+az deployment sub create -l canadacentral -f .\infra\main-all-test.bicep -p .\infra\params-all.json
 
 az group delete --name pvwmiketca-dev-automation --yes
 az group delete --name pvwmiketca-dev-events --yes
@@ -14,7 +14,12 @@ az deployment sub what-if -l canadacentral -f .\main-all.bicep -p .\params-all.j
 
 az deployment sub create -l canadacentral -f .\main-all.bicep -p .\params-all.json
 
+az group delete --name prvw-atmtn-dev-automation --yes
+az group delete --name prvw-atmtn-dev-events --yes
+az group delete --name prvw-atmtn-dev-function --yes
+az group delete --name prvw-atmtn-dev-global-dns --yes
 az group delete --name prvw-atmtn-dev-network --yes
+az group delete --name prvw-atmtn-dev-governance --yes
 
 =============================================================================================
 
