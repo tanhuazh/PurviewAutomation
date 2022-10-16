@@ -1,0 +1,77 @@
+az deployment sub create -l canadacentral -f .\main-preq-test.bicep -p .\params-preq.json
+
+az group delete --name prvw-atmtn-dev-network --yes
+
+# Check the chapter-1 scripts for Login into Azure
+
+# Create the chapter resource group
+az group create -l eastus2 -g 'bicep-chapter2'
+
+# Deploy the implebicepstorage.bicep file to a 'bicep-chapter2' resource group
+az deployment group create -g 'bicep-chapter2' -f .\Chapter-2\simplebicepstorage.bicep -c
+
+# List all your storage accounts
+az storage account list --query [].name -o table
+
+# Deploy storage-w-variables.bicep file with variables and outputs to a RG
+az deployment group create -g 'bicep-chapter2' -f .\Chapter-2\storage-w-variables.bicep
+
+# Clean-up resources without confirmation prompt
+az group delete --name 'bicep-chapter2' --yes
+
+# Check the chapter-1 scripts for Login into Azure
+
+# Create a chapter resource group 'bicep-chapter3'
+az group create -l eastus -g 'bicep-chapter3'
+
+# Deploy app-service.bicep into the RG
+az deployment group create -g 'bicep-chapter3' -f .\Chapter-3\app-service.bicep
+
+# List all app services in your subscription
+az appservice plan list --query [].name -o table
+
+# Deploy the container-registry.bicep with a default (RG) scope
+az deployment group create -g 'bicep-chapter3' -f .\Chapter-3\container-registry.bicep
+
+# List all the azure container registry resources
+az acr list --query [].name -o table
+
+# Deploy a multi-deployment.bicep with a subscription target scope
+az deployment sub create -l eastus -f .\Chapter-3\multi-deployment.bicep
+
+# Use what-if (a Preflight validation check)
+az deployment sub what-if -l eastus -f .\Chapter-3\multi-deployment.bicep
+
+# Use -c (a Preflight validation check with a prompt to continue the deployment)
+az deployment sub create -l eastus -f .\Chapter-3\multi-deployment.bicep -c
+
+# Clean-up resources without confirmation prompt
+az group delete --name 'bicep-chapter3' --yes
+
+# Check the chapter-1 scripts for Login into Azure
+
+# List all RG names
+az group list -o table
+
+# Create the initial chapter-4 resource group
+az group create -l eastus -g 'bicep-chapter4'
+
+# Run decompile on bicep-storage-starter.json file
+az bicep decompile -f .\Chapter-4\bicep-storage-starter.json
+
+# Create RG for 'bicep-chapter4' resources
+az group create -l eastus -g 'bicep-chapter4'
+
+# Deploy the storage into a RG 'cloud-shell-storage-eastus'
+az deployment group create -g 'cloud-shell-storage-eastus' -f .\Chapter-4\tmp\samplestg.json
+
+# Note: Remove unused declarations like queueservices, and "protocolSettings": {} in fileservices.
+
+# Deploy initial chapter-4 environment of three resources
+az deployment group create -g 'bicep-chapter4' -f .\Chapter-4\tmp\resource-group-E.json
+
+# Clean-up resources without confirmation prompt
+az group delete --name 'bicep-chapter4' --yes
+
+# Deployment with five resources
+az deployment group create -g 'bicep-chapter4' -f .\Chapter-4\bicepdemoapp-refactored.bicep 
